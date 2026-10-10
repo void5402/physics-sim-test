@@ -12,5 +12,5 @@ struct ball {
 class physicshandler {
 public:
   std::vector<ball> stuff;
-  void dophysics();
+  void dophysics(float dt);
 };

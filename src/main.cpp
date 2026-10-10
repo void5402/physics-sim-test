@@ -16,7 +16,7 @@ int main() {
         }
       }
     }
-    physics.dophysics();
+    physics.dophysics(1);//i have to go get some numbers from the video
     render(&window, &physics.stuff);
   }
   return 0;
