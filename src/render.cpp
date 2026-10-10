@@ -9,12 +9,14 @@
 
 void render(sf::RenderWindow *window, std::vector<ball> *stuff) {
   sf::CircleShape circle(8);
-  circle.setOrigin({10, 10});
+  circle.setOrigin({circle.getRadius(), circle.getRadius()});
   window->clear();
+  int m;
   for (ball &i : *stuff) {
     circle.setPosition({i.x, i.y});
-    circle.setFillColor(sf::Color::White);
+    circle.setFillColor(sf::Color(m*2%255,m*3%255,m*5%255));
     window->draw(circle);
+    m++;
   }
 
   window->display();
