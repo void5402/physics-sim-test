@@ -1,7 +1,6 @@
 #pragma once
 #include <vector>
 
-
 struct ball {
   float x{0};
   float y{0};

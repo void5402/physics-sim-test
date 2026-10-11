@@ -20,7 +20,7 @@ void render(sf::RenderWindow *window, std::vector<ball> *stuff) {
   window->clear();
   for (ball &i : *stuff) {
     circle.setPosition({i.x, i.y});
-    circle.setFillColor(cc[m++%6]);
+    circle.setFillColor(cc[m++ % 6]);
     window->draw(circle);
   }
 
