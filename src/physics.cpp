@@ -11,8 +11,7 @@ void physicshandler::dophysics(float dt) {
     b.x = newx;
     b.y = newy;
   }
-  // newx = std::clamp(newx, 0.f + 8, 512.f - 8.f);
-  //   newy = std::clamp(newy, 0.f + 8, 512.f - 8.f);
+
   for (int i = 0; i < 3; i++) {
     for (ball &b : stuff) {
       for (ball &c : stuff) {
