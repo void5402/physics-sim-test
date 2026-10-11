@@ -2,10 +2,11 @@
 #include "render.hpp"
 
 int main() {
-  sf::RenderWindow window(sf::VideoMode({500, 500}), "test",sf::Style::Titlebar);
+  sf::RenderWindow window(sf::VideoMode({512, 512}), "test",sf::Style::None);
   window.setVerticalSyncEnabled(true);
-
+  //sf::Clock clock;
   physicshandler physics;
+  //clock.start();
   while (window.isOpen()) {
     while (const std::optional event = window.pollEvent()) {
       if (event->is<sf::Event::Closed>())
@@ -16,7 +17,8 @@ int main() {
         }
       }
     }
-    physics.dophysics(1);//i have to go get some numbers from the video
+    //physics.dophysics(static_cast<float>(clock.restart().asMilliseconds())/1000);
+    physics.dophysics(0.016);
     render(&window, &physics.stuff);
   }
   return 0;
