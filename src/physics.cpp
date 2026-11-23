@@ -20,6 +20,7 @@ void physicshandler::addball(float x, float y, float vx, float vy) {
 }
 
 void physicshandler::dophysics() {
+  
 
   // add new ball
   static int n = 0;
