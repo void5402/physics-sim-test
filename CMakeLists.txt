@@ -3,6 +3,8 @@ project(physcissimulator LANGUAGES CXX)
 set(CMAKE_EXPORT_COMPILE_COMMANDS ON)
 set(CMAKE_RUNTIME_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/bin)
 
+option(buildsfmlfromsource "build sfml from source or use package manager" OFF)
+if(buildsfmlfromsource)
 include(FetchContent)
 FetchContent_Declare(SFML
     GIT_REPOSITORY https://github.com/SFML/SFML.git
@@ -11,6 +13,9 @@ FetchContent_Declare(SFML
     EXCLUDE_FROM_ALL
     SYSTEM)
 FetchContent_MakeAvailable(SFML)
+else()
+find_package(SFML 3.1 REQUIRED COMPONENTS Graphics)
+endif()
 
 add_executable(main
     src/main.cpp

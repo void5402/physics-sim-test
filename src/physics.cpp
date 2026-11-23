@@ -2,43 +2,27 @@
 #include <algorithm>
 #include <cmath>
 
-void physicshandler::dophysics(float dt) {
-  for (ball &b : stuff) {
-    const float newx = 2 * b.x - b.px;
-    const float newy = 2 * b.y - b.py + 50 * dt * dt;
-    b.px = b.x;
-    b.py = b.y;
-    b.x = newx;
-    b.y = newy;
-  }
+inline int physicshandler::checkgridforindex(int i){
+  //since i will be hardcoding this project for now just remmeber
+  //512 x 512 screen -> 16 x 16 cells (+extra byond screen) -> 32 + 2 x 32 + x -> 34 x 34 grid -> 1156 cells(0->1155)
+  //each balwill have a radius of 23(will change)
+  //cell = row*34 + coloum(counting from 0, first visible coloum is 1)[aka 0->33,34->...]
+  return (floor(X[i] / 16) + 1) * 34 + floor(Y[i] / 16) + 1;
+}
 
-  for (int i = 0; i < stuff.size(); ++i) {
-    for (int j = i + 1; j < stuff.size(); ++j) {
-      ball &b = stuff[i];
-      ball &c = stuff[j];
-      if (b.x - 16 <= c.x && c.x <= b.x + 16 && b.y - 16 <= c.y &&
-          c.y <= b.y + 16 && &b != &c) {
-        const float dx = b.x - c.x;
-        const float dy = b.y - c.y;
-        const float dist = std::sqrt(dx * dx + dy * dy);
-        if (dist > 16.f)
-          continue;
-        const float scale = (1 - dist / 16.f) * 0.5;
-        b.x += dx * scale;
-        b.y += dy * scale;
-        c.x -= dx * scale;
-        c.y -= dy * scale;
-      }
-    }
-  }
+void physicshandler::addball(float x, float y, float vx, float vy) {
+  X.emplace_back(x);
+  Y.emplace_back(y);
+  vX.emplace_back(vx);
+  vY.emplace_back(vy);
 
-  for (ball &b : stuff) {
-    b.x = std::clamp(b.x, 8.f, 512.f - 8.f);
-    b.y = std::clamp(b.y, 8.f, 512.f - 8.f);
-  }
-  t += dt;
-  if (t >= 0.1 && stuff.size() < 500) {
-    stuff.emplace_back(10, 10, -160 * dt + 10, 0 + 10);
-    t = 0;
-  }
+
+}
+
+void physicshandler::dophysics() {
+
+  // add new ball
+  static int n = 0;
+  addball(10, 10, 10, 0);
+  cells.emplace_back(checkgridforindex(n++));
 }

@@ -3,4 +3,4 @@
 #include <SFML/Graphics.hpp>
 #include <SFML/Window.hpp>
 
-void render(sf::RenderWindow *window, std::vector<ball> *stuff);
+void render(sf::RenderWindow *window, System *mainsys);
