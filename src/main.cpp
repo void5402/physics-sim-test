@@ -13,8 +13,8 @@ int main(int,char**) {
     while (const std::optional event = window.pollEvent()) {
       if (event->is<sf::Event::Closed>())
         window.close();
-      if (event->is<sf::Event::MouseButtonPressed>())
-        render(&window, &physics.mainsys);
+      // if (event->is<sf::Event::MouseButtonPressed>())
+      //   render(&window, &physics.mainsys);
       if (const auto *key = event->getIf<sf::Event::KeyPressed>()) {
         if (key->scancode == sf::Keyboard::Scan::Q) {
           window.close();
@@ -24,7 +24,7 @@ int main(int,char**) {
     // sf::sleep(sf::milliseconds(16));
     // physics.dophysics(static_cast<float>(clock.restart().asMilliseconds())/1000);
     physics.dophysics();
-    render(&window, &physics.mainsys);
+    render(&window);
   }
   return 0;
 }
