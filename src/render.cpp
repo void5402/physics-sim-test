@@ -1,6 +1,4 @@
 #include "render.hpp"
-#include "physics.hpp"
-#include <SFML/Graphics/Color.hpp>
 
 //todo: use a texture to optimize gpu side
 

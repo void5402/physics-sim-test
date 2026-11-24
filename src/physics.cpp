@@ -26,10 +26,17 @@ void physicshandler::dophysics() {
   // 4-adjust new position and velocity accordingly
   // 5-actually update the positions
   for (int i = 0; i < n; ++i) {
+    //maybe we refrence needed date to reduce member access?
     //add gravity
     vX[i] += 10;
-    
+    //temporary positions
+    float newx = X[i] + vX[i];
+    float newy = Y[i] + vY[i];
 
+    //:3
+
+    X[i] = newx;
+    Y[i] = newy;
   }
   // add new ball
   addball(10, 10, 10, 0);
