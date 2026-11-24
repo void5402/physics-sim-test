@@ -2,6 +2,10 @@
 #include "physics.hpp"
 #include <cmath>
 
+physicshandler::physicshandler() {
+  cells.resize(1156,-1);
+}
+
 inline int physicshandler::checkgridforindex(int i) {
   // since i will be hardcoding this project for now just remmeber
   // 512 x 512 screen -> 16 x 16 cells (+extra byond screen) -> 32 + 2 x 32 + x
@@ -25,6 +29,7 @@ void physicshandler::dophysics() {
   // 3-check for any collision with constraints(other balls, walls)
   // 4-adjust new position and velocity accordingly
   // 5-actually update the positions
+  // 6-check for grid updates
   for (int i = 0; i < n; ++i) {
     // maybe we refrence needed date to reduce member access?
     // add gravity
@@ -52,12 +57,32 @@ void physicshandler::dophysics() {
       vY[i] *= -0.8;
     }
     //do collision detection
-    
-    //update the finall positions
+    const int c = checkgridforindex(i);
+    for(int m = -1; m < 2; ++m ){
+      for(int j = -1; j < 2; ++j){
+        const int ii = cells[c - 34 * m - j];
+        if(ii>i){
+          X[ii] = 120;
+        }
+      }
+    }
+
+    // update the finall positions and grid
     X[i] = newx;
     Y[i] = newy;
+
+
+    //update grid
+    const int nc = checkgridforindex(i);
+    if(cells[nc] != i){
+      cells[c] = -1;
+      cells[nc] = i;
+    }
+
   }
+
   // add new ball
   addball(13, 13, 40, 0);
-  cells.emplace_back(checkgridforindex(n++));
+  cells[checkgridforindex(n)] = n;
+  n++;
 }

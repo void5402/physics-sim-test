@@ -1,5 +1,6 @@
 #include "physics.hpp"
 #include "render.hpp"
+
 int main(int,char**) {
   sf::RenderWindow window(sf::VideoMode({512, 512}), "test", sf::Style::Default);
   window.setVerticalSyncEnabled(true);

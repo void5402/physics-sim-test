@@ -24,4 +24,5 @@ public:
   //actually i might need to change my approach if i want to go multithreaded
   int n = 0;
   void dophysics();
+  physicshandler();
 };
