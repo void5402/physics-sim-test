@@ -28,7 +28,7 @@ void physicshandler::dophysics() {
   for (int i = 0; i < n; ++i) {
     //maybe we refrence needed date to reduce member access?
     //add gravity
-    vX[i] += 10;
+    vY[i] += 10;
     //temporary positions
     float newx = X[i] + vX[i];
     float newy = Y[i] + vY[i];

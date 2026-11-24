@@ -1,28 +1,27 @@
 #include "physics.hpp"
 #include "render.hpp"
-#include <SFML/System/Sleep.hpp>
-#include <SFML/System/Time.hpp>
 int main(int,char**) {
   sf::RenderWindow window(sf::VideoMode({512, 512}), "test", sf::Style::Default);
   window.setVerticalSyncEnabled(true);
-  // sf::Clock clock;
+  sf::Clock clock;
   physicshandler physics;
-  // clock.start();
+  clock.start();
   window.display();
   while (window.isOpen()) {
+
     while (const std::optional event = window.pollEvent()) {
       if (event->is<sf::Event::Closed>())
         window.close();
-      // if (event->is<sf::Event::MouseButtonPressed>())
-      //   render(&window, &physics.mainsys);
       if (const auto *key = event->getIf<sf::Event::KeyPressed>()) {
         if (key->scancode == sf::Keyboard::Scan::Q) {
           window.close();
         }
       }
     }
-    // sf::sleep(sf::milliseconds(16));
+
+    sf::sleep(sf::milliseconds(16) - clock.restart());
     // physics.dophysics(static_cast<float>(clock.restart().asMilliseconds())/1000);
+
     physics.dophysics();
     render(&window,&(physics.X),&(physics.Y));
   }
