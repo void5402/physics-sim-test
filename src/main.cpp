@@ -7,14 +7,21 @@ int main(int,char**) {
   physicshandler physics;
   clock.start();
   window.display();
+  bool m{true};
   while (window.isOpen()) {
-
     while (const std::optional event = window.pollEvent()) {
       if (event->is<sf::Event::Closed>())
         window.close();
       if (const auto *key = event->getIf<sf::Event::KeyPressed>()) {
-        if (key->scancode == sf::Keyboard::Scan::Q) {
-          window.close();
+        switch (key->scancode) {
+          case sf::Keyboard::Scan::Q:
+            window.close();
+            break;
+          case sf::Keyboard::Scan::Space:
+            m = !m;
+            break;
+          default:
+            break;
         }
       }
     }
@@ -22,7 +29,7 @@ int main(int,char**) {
     sf::sleep(sf::milliseconds(16) - clock.restart());
     // physics.dophysics(static_cast<float>(clock.restart().asMilliseconds())/1000);
 
-    physics.dophysics();
+    if (m) physics.dophysics();
     render(&window,&(physics.X),&(physics.Y));
   }
   return 0;

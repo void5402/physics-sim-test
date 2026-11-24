@@ -6,7 +6,7 @@ static std::vector<sf::Color> cc{sf::Color::Red,   sf::Color::Yellow,
                                  sf::Color::Green, sf::Color::Blue,
                                  sf::Color::Cyan,  sf::Color::Magenta};
 void render(sf::RenderWindow *window, std::vector<float> *X, std::vector<float> *Y) {
-  sf::CircleShape circle(8);
+  sf::CircleShape circle(12);
   circle.setOrigin({circle.getRadius(), circle.getRadius()});
   int m = 0;
   window->clear();

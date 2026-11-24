@@ -26,19 +26,38 @@ void physicshandler::dophysics() {
   // 4-adjust new position and velocity accordingly
   // 5-actually update the positions
   for (int i = 0; i < n; ++i) {
-    //maybe we refrence needed date to reduce member access?
-    //add gravity
+    // maybe we refrence needed date to reduce member access?
+    // add gravity
     vY[i] += 10;
-    //temporary positions
+    // temporary positions
     float newx = X[i] + vX[i];
     float newy = Y[i] + vY[i];
-
-    //:3
-
+    // check for walls
+    if (newx >= 499) {
+      newy = vY[i] * (499 - X[i]) / (newx - X[i]) + Y[i];
+      newx = 499;
+      vX[i] *= -0.8;
+    } else if (newx <= 13) {
+      newy = vY[i] * (13 - X[i]) / (newx - X[i]) + Y[i];
+      newx = 13;
+      vX[i] *= -0.8;
+    }
+    if (newy >= 499) {
+      newx = vX[i] * (499 - Y[i]) / (newy - Y[i]) + X[i];
+      newy = 499;
+      vY[i] *= -0.8;
+    } else if (newy <= 13) {
+      newx = vX[i] * (13 - Y[i]) / (newy - Y[i]) + X[i];
+      newy = 13;
+      vY[i] *= -0.8;
+    }
+    //do collision detection
+    
+    //update the finall positions
     X[i] = newx;
     Y[i] = newy;
   }
   // add new ball
-  addball(10, 10, 10, 0);
+  addball(13, 13, 40, 0);
   cells.emplace_back(checkgridforindex(n++));
 }
