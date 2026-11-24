@@ -24,7 +24,7 @@ int main(int,char**) {
     // sf::sleep(sf::milliseconds(16));
     // physics.dophysics(static_cast<float>(clock.restart().asMilliseconds())/1000);
     physics.dophysics();
-    render(&window);
+    render(&window,&(physics.X),&(physics.Y));
   }
   return 0;
 }

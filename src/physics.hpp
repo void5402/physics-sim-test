@@ -19,5 +19,9 @@ public:
   // each cell will check its location every tick for any changes
   // and if needed it will update its grid position
   std::vector<int> cells;
+  //number of balls(why am i adding this instead of using .size? 
+  //because i want to avoid extra brain damage!)
+  //actually i might need to change my approach if i want to go multithreaded
+  int n = 0;
   void dophysics();
 };
