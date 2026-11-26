@@ -1,18 +1,21 @@
 
 #include "physics.hpp"
+#include <algorithm>
 #include <cmath>
 
-physicshandler::physicshandler() {
-  cells.resize(1156,-1);
-}
+physicshandler::physicshandler() { cells.resize(1156, -1); }
 
-inline int physicshandler::checkgridforindex(int i) {
+inline int physicshandler::checkgrid(int i) {
   // since i will be hardcoding this project for now just remmeber
   // 512 x 512 screen -> 16 x 16 cells (+extra byond screen) -> 32 + 2 x 32 + x
   // -> 34 x 34 grid -> 1156 cells(0->1155) each balwill have a radius of 13
   // cell = row*34 + coloum(counting from 0, first visible coloum is 1)[aka
   // 0->33,34->...]
   return (floor(X[i] / 16) + 1) * 34 + floor(Y[i] / 16) + 1;
+}
+
+inline int physicshandler::checkgrid(float x, float y) {
+  return (floor(x / 16) + 1) * 34 + floor(y / 16) + 1;
 }
 
 void physicshandler::addball(float x, float y, float vx, float vy) {
@@ -56,33 +59,39 @@ void physicshandler::dophysics() {
       newy = 13;
       vY[i] *= -0.8;
     }
-    //do collision detection
-    const int c = checkgridforindex(i);
-    for(int m = -1; m < 2; ++m ){
-      for(int j = -1; j < 2; ++j){
-        const int ii = cells[c - 34 * m - j];
-        if(ii>i){
-          X[ii] = 120;
+    // do collision detection
+    const int c = checkgrid(newx, newy);
+    for (int m = -1; m < 2; ++m) {
+      for (int j = -1; j < 2; ++j) {
+        const int ii = cells[c + 34 * m + j];
+        if (ii > i) {
+          const float dx = newx - X[ii];
+          const float dy = newy - Y[ii];
+          if (dx*dx + dy*dy < 26*26) {
+            newx += (newx - X[ii]) / 2;
+            vX[ii] -= (newx - X[ii]) / 2;
+            newy += (newy - Y[ii]) / 2;
+            vY[ii] -= (newy - Y[ii]) / 2;
+          }
         }
       }
+    }
+
+    // update grid
+    const int oc = checkgrid(i);
+    const int nc = checkgrid(newx, newy);
+    if (cells[nc] != i) {
+      cells[oc] = -1;
+      cells[nc] = i;
     }
 
     // update the finall positions and grid
     X[i] = newx;
     Y[i] = newy;
-
-
-    //update grid
-    const int nc = checkgridforindex(i);
-    if(cells[nc] != i){
-      cells[c] = -1;
-      cells[nc] = i;
-    }
-
   }
 
   // add new ball
   addball(13, 13, 40, 0);
-  cells[checkgridforindex(n)] = n;
+  cells[checkgrid(n)] = n;
   n++;
 }

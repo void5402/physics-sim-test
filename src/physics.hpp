@@ -4,7 +4,8 @@
 class physicshandler {
 private:
   void addball(float x, float y, float vx, float vy);
-  inline int checkgridforindex(int i);
+  inline int checkgrid(int i);
+  inline int checkgrid(float x, float y);
 public:
   // locations
   std::vector<float> X;
